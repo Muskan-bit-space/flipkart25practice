@@ -25,17 +25,17 @@ int main(){
     for (int msg_seq = 0; msg_seq < m; msg_seq++)
     {
         //avg 
-        avg[msg_seq]=0;
         for (int server = 0; server < n; server++){
             int num=msg_grid[msg_seq][server];
             avg[msg_seq]+=num;
             maxcounter[server]=max(maxcounter[server],num);   
         }
+        avg[msg_seq]/=n; // average for this sequence
     }
     
 
     //max_msg_in_this_seq
-    vector<int>max_msg_in_this_seq(m,INT_MIN);
+    vector<int>max_msg_in_this_seq(m,0);
     int desired_seq_count=INT_MIN;
     for(int seq=0;seq<m;seq++){
 
@@ -49,11 +49,20 @@ int main(){
         
         }
 
-        if(desired_seq_count>max_msg_in_this_seq[seq]){
-            desired_seq_count=max_msg_in_this_seq[seq];
+        if(desired_seq_count<max_msg_in_this_seq[seq]){
+            desired_seq_count =max_msg_in_this_seq[seq];
         }
     }
 
+
+    for (int i = 0; i < m; i++)
+    {
+        cout<<max_msg_in_this_seq[i]<<" "; // for debugging
+        /* code */
+    }
+
+    cout<<"\n"; cout<<desired_seq_count<<"\n"; // for debugging
+    
     //jo last mei update kregi desired_seq_count ko tha'll be one of the desired seq
 
     //find the seq id with max average
@@ -71,3 +80,20 @@ int main(){
     cout<<ans<<"\n";
     return 0;
 }
+
+/*
+3 3
+1 2 3
+3 2 1
+2 2 2
+
+2
+
+4 2
+1 3
+2 4
+3 3
+4 4
+
+3
+*/
